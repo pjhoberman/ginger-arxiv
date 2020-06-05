@@ -340,6 +340,7 @@ ginger_arxiv/media/
 
 
 .env
+.envs/
 .envs/*
 !.envs/.local/
 .idea/*
