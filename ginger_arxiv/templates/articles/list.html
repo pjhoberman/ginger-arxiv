@@ -13,7 +13,12 @@
         {{article.summary}}
       </p>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Authors: {{article.authors | join:", "}}</li>
+      <li class="list-group-item">Authors:
+      {% for author in article.authors %}
+      <a href="{% url 'articles:author_detail' author_pk=author.pk %}">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
+
+      {% endfor %}
+      </li>
         {% if article.journal %}<li class="list-group-item">{{article.journal}}</li>{% endif %}
         {% if article.journal %}<li class="list-group-item">{{article.details}}</li>{% endif %}
         <li class="list-group-item">Published: {{article.published}}</li>

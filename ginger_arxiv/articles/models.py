@@ -29,6 +29,9 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
+    def articles(self):
+        return [aa.article for aa in ArticleAuthor.objects.filter(author=self)]
+
 
 class ArticleAuthor(models.Model):
     author = models.ForeignKey("Author", on_delete=models.CASCADE)  # todo: index
