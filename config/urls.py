@@ -16,6 +16,7 @@ urlpatterns = [
     path("users/", include("ginger_arxiv.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("articles/", include("ginger_arxiv.articles.urls", namespace="articles")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
