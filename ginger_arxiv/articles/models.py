@@ -13,7 +13,7 @@ class Article(models.Model):
     details = models.CharField(max_length=255, blank=True, null=True)
     journal = models.CharField(max_length=255, blank=True, null=True)
 
-    # todo: add categories?
+    # todo: add categories? -- https://arxiv.org/help/prep#subj entry['arxiv_primary_category']['term']
 
     def __str__(self):
         return self.title
