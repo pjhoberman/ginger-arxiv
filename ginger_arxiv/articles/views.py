@@ -1,3 +1,8 @@
-# from django.shortcuts import render
+from django.shortcuts import render
 
-# Create your views here.
+from .models import Article
+
+
+def list_articles(request):
+    articles = Article.objects.all()  # todo: check requirements
+    return render(request, "articles/list.html", {"articles": articles})
