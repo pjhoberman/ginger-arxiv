@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-sm-12">
       {% for article in articles %}
-      <a href="{{article.link}}">{{ article.title }}</a>
+      <a href="{{article.link}}">{{ article.title }}</a> -- {{article.authors | join:", "}}
       {% endfor %}
     </div>
   </div>
