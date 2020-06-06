@@ -8,6 +8,11 @@ from .models import Article, ArticleAuthor, Author
 def get_articles(url: str):
     d = feedparser.parse(url)
     for entry in d.entries:
+        # todo: do all entries have a link?
+        # see if the article is already imported
+        if Article.objects.filter(link=entry.get("link")).count() > 0:
+            continue
+
         # todo: are there ever more than one PDF link?
         try:
             pdf_link = [
@@ -16,7 +21,6 @@ def get_articles(url: str):
         except IndexError:
             pdf_link = None
 
-        # todo: mame something here unique to test against
         article = Article.objects.create(
             link=entry.get("link", None),
             arxiv_published=entry.get("published", None),
@@ -28,11 +32,9 @@ def get_articles(url: str):
             details=entry.get("arxiv_comment", None),
             journal=entry.get("arxiv_journal_ref", None),
         )
-        print(article)
+
         for author_name in [author.name for author in entry["authors"]]:
             author, created = Author.objects.get_or_create(
                 name=author_name, defaults={"name": author_name}
             )
-            print(author, created)
-            aa = ArticleAuthor.objects.create(article=article, author=author)
-            print(aa)
+            ArticleAuthor.objects.create(article=article, author=author)
