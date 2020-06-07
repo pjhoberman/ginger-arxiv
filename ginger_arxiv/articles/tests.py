@@ -1,7 +1,8 @@
+import feedparser
 from django.test import TestCase
 
-from .import_articles import get_articles
-from .models import Article
+from ginger_arxiv.articles.import_articles import get_articles, next_page
+from ginger_arxiv.articles.models import Article
 
 
 class TestArticleRetrieval(TestCase):
@@ -11,9 +12,13 @@ class TestArticleRetrieval(TestCase):
 
         # This url should return 3 results -- fragile test as it relies on 3rd party
         url = "http://export.arxiv.org/api/query?search_query=all:electron&start=0&max_results=3"
-        get_articles(url)
+        d = feedparser.parse(url)
+        get_articles(d.entries)
         self.assertEqual(Article.objects.count(), 3)
 
         # Code should not re-add articles
-        get_articles(url)
+        get_articles(d.entries)
         self.assertEqual(Article.objects.count(), 3)
+
+    def test_pagination(self):
+        next_page()

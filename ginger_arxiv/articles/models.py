@@ -10,8 +10,8 @@ class Article(models.Model):
     summary = models.TextField()
     doi = models.CharField(max_length=25, blank=True, null=True)
     pdf_link = models.URLField(blank=True, null=True)
-    details = models.CharField(max_length=255, blank=True, null=True)
-    journal = models.CharField(max_length=255, blank=True, null=True)
+    details = models.TextField(blank=True, null=True)
+    journal = models.TextField(blank=True, null=True)
 
     # todo: add categories? -- https://arxiv.org/help/prep#subj entry['arxiv_primary_category']['term']
 
@@ -23,11 +23,22 @@ class Article(models.Model):
         return [aa.author for aa in ArticleAuthor.objects.filter(article=self)]
 
 
+class AuthorManager(models.Manager):
+    def all_authors(self):
+        return (
+            Author.objects.all().prefetch_related()
+        )  # todo: here - replace AA with m2m field?
+
+    # https://docs.djangoproject.com/en/3.0/ref/models/querysets/#prefetch-related
+
+
 class Author(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
+    objects = AuthorManager()
 
     def articles(self):
         return [aa.article for aa in ArticleAuthor.objects.filter(author=self)]

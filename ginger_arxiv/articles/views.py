@@ -14,7 +14,7 @@ def article_detail(request, article_pk):
 
 
 def author_list(request):
-    authors = Author.objects.all().order_by("name")
+    authors = Author.objects.all().order_by("name")[:100]
     return render(request, "articles/author_list.html", {"authors": authors})
 
 
