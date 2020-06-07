@@ -6,26 +6,29 @@
 <div class="container">
 
   {% for article in articles %}
+
   <div class="card mb-3">
     <div class="card-body">
-      <h3 class="card-title">{{article.title}}</h3>
-      <p class="card-text">
-        {{article.summary}}
-      </p>
-      <ul class="list-group list-group-flush">
-      <li class="list-group-item">Authors:
-      {% for author in article.authors %}
-      <a href="{% url 'articles:author_detail' author_pk=author.pk %}">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
-
-      {% endfor %}
-      </li>
-        {% if article.journal %}<li class="list-group-item">{{article.journal}}</li>{% endif %}
-        {% if article.journal %}<li class="list-group-item">{{article.details}}</li>{% endif %}
+      <h3 class="card-title"><a href="{% url 'articles:detail' article_pk=article.pk %}">{{article.title}}</a></h3>
+{#      <p class="card-text">#}
+{#        {{article.summary}}#}
+{#      </p>#}
+{#      <ul class="list-group list-group-flush">#}
+{#      <li class="list-group-item">Authors:#}
+{#      {% for author in article.authors %}#}
+{#      <a href="{% url 'articles:author_detail' author_pk=author.pk %}">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}#}
+{##}
+{#      {% endfor %}#}
+{#      </li>#}
+{#        {% if article.journal %}<li class="list-group-item">{{article.journal}}</li>{% endif %}#}
+{#        {% if article.journal %}<li class="list-group-item">{{article.details}}</li>{% endif %}#}
+        {% if article.published %}
         <li class="list-group-item">Published: {{article.published}}</li>
-        <li class="list-group-item">Article Link:</li>
-        <li class="list-group-item">PDF: {{article.pdf_link}}</li>
-      </ul>
-      <a href="{{article.link}}" class="btn btn-primary">Read full article</a>
+        {% endif %}
+{#        <li class="list-group-item">Article Link:</li>#}
+{#        <li class="list-group-item">PDF: {{article.pdf_link}}</li>#}
+{#      </ul>#}
+{#      <a href="{{article.link}}" class="btn btn-primary">Read full article</a>#}
     </div>
   </div>
   {% endfor %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="card mb-3">
+      <h1>{{ article.title }}</h1>
+
+      <p class="card-text" style="padding: 15px;">
+          {{ article.summary }}
+      </p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Authors:
+            {% for author in article.authors %}
+              <a href="{% url 'articles:author_detail' author_pk=author.pk %}">{{ author.name }}</a>
+                {% if not forloop.last %}, {% endif %}
+
+            {% endfor %}
+        </li>
+          {% if article.journal %}<li class="list-group-item">Journal: {{ article.journal }}</li>{% endif %}
+          {% if article.journal %}<li class="list-group-item">{{ article.details }}</li>{% endif %}
+          {% if article.published %}<li class="list-group-item">Published: {{ article.published }}</li>{% endif %}
+      </ul>
+      <a href="{{ article.link }}" class="btn btn-primary">Read full article</a>
+      {% if article.pdf_link %}
+      <a href="{{ article.pdf_link }}" class="btn btn-secondary">Article PDF</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

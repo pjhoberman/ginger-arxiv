@@ -7,7 +7,7 @@
   <h1>{{ author }}</h1>
   <ul>
     {%  for article in author.articles %}
-      <li><a href="#">{{ article }}</a></li>
+      <li><a href="{% url 'articles:detail' article_pk=article.pk %}">{{ article }}</a></li>
     {% endfor %}
   </ul>
 
