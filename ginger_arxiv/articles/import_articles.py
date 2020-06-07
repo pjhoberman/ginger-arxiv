@@ -1,6 +1,6 @@
 import feedparser
 
-from ginger_arxiv.articles.models import Article, ArticleAuthor, Author
+from ginger_arxiv.articles.models import Article, Author
 
 # todo: should this be a class
 # limit to: psychiatry, therapy, data science or machine learning
@@ -16,7 +16,7 @@ Q = "+OR+".join([term.replace(" ", "+").replace('"', "%22") for term in Q])
 # url = f"http://export.arxiv.org/api/query?search_query={Q}&start=0&max_results=3"
 
 
-def next_page():
+def next_page(test=False):
     base_url = f"http://export.arxiv.org/api/query?search_query={Q}"
     start = 0
     max_results = 100
@@ -26,6 +26,8 @@ def next_page():
     d = feedparser.parse(url)
     while len(d.entries) > 0:
         get_articles(d.entries)
+        if test:
+            break
         start = max_results
         max_results += 100
         print(f"retrieving results {start} - {max_results}")
@@ -70,4 +72,5 @@ def get_articles(entries):
             author, created = Author.objects.get_or_create(
                 name=author_name, defaults={"name": author_name}
             )
-            ArticleAuthor.objects.create(article=article, author=author)
+            author.articles.add(article)
+            # ArticleAuthor.objects.create(article=article, author=author)

@@ -12,7 +12,7 @@
       </p>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Authors:
-            {% for author in article.authors %}
+            {% for author in article.Authors.all %}
               <a href="{% url 'articles:author_detail' author_pk=author.pk %}">{{ author.name }}</a>
                 {% if not forloop.last %}, {% endif %}
 

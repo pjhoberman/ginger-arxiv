@@ -6,7 +6,7 @@
 <div class="container">
   <h1>{{ author }}</h1>
   <ul>
-    {%  for article in author.articles %}
+    {%  for article in author.all_articles %}
       <li><a href="{% url 'articles:detail' article_pk=article.pk %}">{{ article }}</a></li>
     {% endfor %}
   </ul>

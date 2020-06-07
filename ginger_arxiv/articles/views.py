@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 
 from .models import Article, Author
@@ -14,7 +15,11 @@ def article_detail(request, article_pk):
 
 
 def author_list(request):
-    authors = Author.objects.all().order_by("name")[:100]
+    authors = (
+        Author.objects.all()
+        .annotate(num_articles=Count("articles"))
+        .order_by("-num_articles")[:100]
+    )
     return render(request, "articles/author_list.html", {"authors": authors})
 
 
