@@ -12,9 +12,9 @@ class Article(models.Model):
     pdf_link = models.URLField(blank=True, null=True)
     details = models.TextField(blank=True, null=True)
     journal = models.TextField(blank=True, null=True)
-    # authors = models.ManyToManyField(Author, related_name="articles")
 
-    # todo: add categories? -- https://arxiv.org/help/prep#subj entry['arxiv_primary_category']['term']
+    # todo: add categories -- https://arxiv.org/help/prep#subj entry['arxiv_primary_category']['term']
+    #   And allow for filtering by category, show category on lists, etc
 
     def __str__(self):
         return self.title
@@ -24,15 +24,6 @@ class Article(models.Model):
         return [aa.author for aa in ArticleAuthor.objects.filter(article=self)]
 
 
-# class AuthorManager(models.Manager):
-#     def all_authors(self):
-#         return (
-#             Author.objects.all().prefetch_related()
-#         )  # todo: here - replace AA with m2m field?
-
-# https://docs.djangoproject.com/en/3.0/ref/models/querysets/#prefetch-related
-
-
 class Author(models.Model):
     name = models.CharField(max_length=255)
     articles = models.ManyToManyField(Article, related_name="Authors")
@@ -40,8 +31,6 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
-
-    # objects = AuthorManager()
 
     def all_articles(self):
         return self.articles.all()
