@@ -1,6 +1,9 @@
+from datetime import date, timedelta
+
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 
+from .import_articles import call_arxiv_api
 from .models import Article, Author
 
 
@@ -28,3 +31,19 @@ def author_list(request):
 def author_detail(request, author_pk):
     author = get_object_or_404(Author, pk=author_pk)
     return render(request, "articles/author_detail.html", {"author": author})
+
+
+def import_articles(request):
+    article_count = None
+    if request.GET.get("test", None):
+        call_arxiv_api(test=True)
+
+    elif request.GET.get("call", None):
+        call_arxiv_api(test=True)  # todo: remove test
+        article_count = Article.objects.filter(
+            added__gt=date.today() - timedelta(days=1)
+        ).count()
+
+    return render(
+        request, "articles/import_articles.html", {"article_count": article_count}
+    )

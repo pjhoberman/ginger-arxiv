@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Import Articles{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Import Articles</h1>
+  {% if article_count %}
+  Imported {{ article_count }} articles.
+  {% else %}
+  This operation runs automatically. Calling it now might take some time. Are you sure?<br />
+  Also, there isn't any ajax set up yet, so this page might just look like it's loading for a while.<br />
+  <button class="btn-primary" onclick="window.location = window.location + '?call=true';">Run it!</button>
+  {% endif %}
+</div>
+{% endblock %}

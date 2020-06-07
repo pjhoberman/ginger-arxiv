@@ -3,9 +3,9 @@ from django.db import models
 
 class Article(models.Model):
     link = models.URLField(unique=True, db_index=True)
-    added = models.DateTimeField(auto_now_add=True)  # added to our system
-    arxiv_published = models.DateTimeField(blank=True, null=True)
-    arxiv_updated = models.DateTimeField(blank=True, null=True)
+    added = models.DateField(auto_now_add=True)  # added to our system
+    arxiv_published = models.DateField(blank=True, null=True)
+    arxiv_updated = models.DateField(blank=True, null=True)
     title = models.CharField(max_length=255)
     summary = models.TextField()
     doi = models.CharField(max_length=25, blank=True, null=True)
