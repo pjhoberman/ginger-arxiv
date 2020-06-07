@@ -73,4 +73,6 @@ def get_articles(entries):
                 name=author_name, defaults={"name": author_name}
             )
             author.articles.add(article)
+            author.article_count = author.articles.count()
+            author.save()  # todo: time consuming but saves time later?
             # ArticleAuthor.objects.create(article=article, author=author)
