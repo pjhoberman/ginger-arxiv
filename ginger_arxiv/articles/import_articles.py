@@ -5,7 +5,6 @@ import pytz
 
 from ginger_arxiv.articles.models import Article, Author
 
-# todo: should this be a class
 # limit to: psychiatry, therapy, data science or machine learning
 Q = [
     "all:psychiatry",
@@ -82,4 +81,4 @@ def get_articles(entries):
             )
             author.articles.add(article)
             author.article_count = author.articles.count()
-            author.save()  # todo: time consuming but saves time later?
+            author.save()  # todo: time consuming but saves time later

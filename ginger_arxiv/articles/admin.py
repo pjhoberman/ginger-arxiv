@@ -8,7 +8,6 @@ class AuthorAdmin(admin.ModelAdmin):
     list_display = [
         "name",
     ]
-    # todo: show articles
 
 
 @admin.register(Article)
@@ -18,4 +17,3 @@ class ArticleAdmin(admin.ModelAdmin):
         "title",
         "link",
     ]
-    # todo: show authors

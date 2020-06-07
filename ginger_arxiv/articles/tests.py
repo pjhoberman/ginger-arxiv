@@ -20,7 +20,7 @@ class TestArticleRetrieval(TestCase):
         get_articles(d.entries)
         self.assertEqual(Article.objects.count(), 3)
 
-    def test_pagination(self):
+    def test_call_api(self):
         self.assertEqual(Article.objects.count(), 0)
         call_arxiv_api(test=True)
 
@@ -28,3 +28,4 @@ class TestArticleRetrieval(TestCase):
 
         # Further tests to run:
         # - Does call stop when it reaches 6+ months
+        # - what if there are less than 100 articles total
