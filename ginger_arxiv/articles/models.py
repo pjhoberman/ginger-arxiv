@@ -19,10 +19,6 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
-    def authors(self):
-        """Returns list of author objects"""
-        return [aa.author for aa in ArticleAuthor.objects.filter(article=self)]
-
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
@@ -34,17 +30,3 @@ class Author(models.Model):
 
     def all_articles(self):
         return self.articles.all()
-
-    def count_articles(self):
-        return self.articles.count()
-
-
-class ArticleAuthor(models.Model):
-    author = models.ForeignKey("Author", on_delete=models.CASCADE)  # todo: index
-    article = models.ForeignKey("Article", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return "{} - {}".format(self.author, self.article)
-
-    class Meta:
-        unique_together = ("author", "article")

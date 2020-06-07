@@ -22,9 +22,9 @@
           {% if article.journal %}<li class="list-group-item">{{ article.details }}</li>{% endif %}
           {% if article.arxiv_published %}<li class="list-group-item">Published: {{ article.arxiv_published }}</li>{% endif %}
       </ul>
-      <a href="{{ article.link }}" class="btn btn-primary">Read full article</a>
+      <a href="{{ article.link }}" target="_blank" class="btn btn-primary">Read full article</a>
       {% if article.pdf_link %}
-      <a href="{{ article.pdf_link }}" class="btn btn-secondary">Article PDF</a>
+      <a href="{{ article.pdf_link }}" target="_blank" class="btn btn-secondary">Article PDF</a>
       {% endif %}
     </div>
   </div>

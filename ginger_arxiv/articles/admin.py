@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Article, ArticleAuthor, Author
+from .models import Article, Author
 
 
 @admin.register(Author)
@@ -19,8 +19,3 @@ class ArticleAdmin(admin.ModelAdmin):
         "link",
     ]
     # todo: show authors
-
-
-@admin.register(ArticleAuthor)
-class ArticleAuthorAdmin(admin.ModelAdmin):
-    list_display = ["article", "author"]
