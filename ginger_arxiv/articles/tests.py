@@ -1,7 +1,7 @@
 import feedparser
 from django.test import TestCase
 
-from ginger_arxiv.articles.import_articles import get_articles, next_page
+from ginger_arxiv.articles.import_articles import call_arxiv_api, get_articles
 from ginger_arxiv.articles.models import Article
 
 
@@ -21,4 +21,4 @@ class TestArticleRetrieval(TestCase):
         self.assertEqual(Article.objects.count(), 3)
 
     def test_pagination(self):
-        next_page()
+        call_arxiv_api()

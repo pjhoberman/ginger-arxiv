@@ -22,8 +22,8 @@
 {#      </li>#}
 {#        {% if article.journal %}<li class="list-group-item">{{article.journal}}</li>{% endif %}#}
 {#        {% if article.journal %}<li class="list-group-item">{{article.details}}</li>{% endif %}#}
-        {% if article.published %}
-        <li class="list-group-item">Published: {{article.published}}</li>
+        {% if article.arxiv_published %}
+        <li class="list-group-item">Published: {{article.arxiv_published}}</li>
         {% endif %}
 {#        <li class="list-group-item">Article Link:</li>#}
 {#        <li class="list-group-item">PDF: {{article.pdf_link}}</li>#}

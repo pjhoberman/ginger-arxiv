@@ -1,10 +1,12 @@
+from datetime import datetime, timedelta
+
 import feedparser
+import pytz
 
 from ginger_arxiv.articles.models import Article, Author
 
 # todo: should this be a class
 # limit to: psychiatry, therapy, data science or machine learning
-# cs.LG - Machine Learning
 Q = [
     "all:psychiatry",
     "all:therapy",
@@ -13,18 +15,25 @@ Q = [
 ]
 Q = "+OR+".join([term.replace(" ", "+").replace('"', "%22") for term in Q])
 
-# url = f"http://export.arxiv.org/api/query?search_query={Q}&start=0&max_results=3"
+
+def convert_date(date: str):
+    # atom format: 2007-02-27T16:02:02-05:00
+    return datetime.strptime(date, "%Y-%m-%dT%H:%M:%S%z") if date else None
 
 
-def next_page(test=False):
-    base_url = f"http://export.arxiv.org/api/query?search_query={Q}"
+def call_arxiv_api(test: bool = False):
+    base_url = f"http://export.arxiv.org/api/query?search_query={Q}&sortBy=submittedDate&sortOrder=descending"
     start = 0
     max_results = 100
-    # &start=0&max_results=3"
     url = f"{base_url}&start={start}&max_results={max_results}"
+
+    six_months_ago = datetime.now(pytz.utc) - timedelta(weeks=26)
 
     d = feedparser.parse(url)
     while len(d.entries) > 0:
+        # stop importing if the first result is older than 6 months old
+        if convert_date(d.entries[0]["published"]) < six_months_ago:
+            break
         get_articles(d.entries)
         if test:
             break
@@ -36,7 +45,6 @@ def next_page(test=False):
 
 
 def get_articles(entries):
-    # d = feedparser.parse(url)
     for entry in entries:
         # todo: do all entries have a link?
         # see if the article is already imported
@@ -58,8 +66,8 @@ def get_articles(entries):
 
         article = Article.objects.create(
             link=entry.get("link", None),
-            arxiv_published=entry.get("published", None),
-            arxiv_updated=entry.get("updated", None),
+            arxiv_published=convert_date(entry.get("published", None)),
+            arxiv_updated=convert_date(entry.get("updated", None)),
             title=title,
             summary=entry.get("summary", None),
             doi=entry.get("arxiv_doi, None"),
@@ -75,4 +83,3 @@ def get_articles(entries):
             author.articles.add(article)
             author.article_count = author.articles.count()
             author.save()  # todo: time consuming but saves time later?
-            # ArticleAuthor.objects.create(article=article, author=author)

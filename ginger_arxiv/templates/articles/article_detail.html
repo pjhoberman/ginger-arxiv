@@ -20,7 +20,7 @@
         </li>
           {% if article.journal %}<li class="list-group-item">Journal: {{ article.journal }}</li>{% endif %}
           {% if article.journal %}<li class="list-group-item">{{ article.details }}</li>{% endif %}
-          {% if article.published %}<li class="list-group-item">Published: {{ article.published }}</li>{% endif %}
+          {% if article.arxiv_published %}<li class="list-group-item">Published: {{ article.arxiv_published }}</li>{% endif %}
       </ul>
       <a href="{{ article.link }}" class="btn btn-primary">Read full article</a>
       {% if article.pdf_link %}
