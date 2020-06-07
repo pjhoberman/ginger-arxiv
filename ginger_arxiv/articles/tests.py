@@ -21,4 +21,10 @@ class TestArticleRetrieval(TestCase):
         self.assertEqual(Article.objects.count(), 3)
 
     def test_pagination(self):
-        call_arxiv_api()
+        self.assertEqual(Article.objects.count(), 0)
+        call_arxiv_api(test=True)
+
+        self.assertEqual(Article.objects.count(), 100)
+
+        # Further tests to run:
+        # - Does call stop when it reaches 6+ months
