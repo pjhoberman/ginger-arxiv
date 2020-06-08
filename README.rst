@@ -21,6 +21,50 @@ Moved to settings_.
 
 .. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
 
+Getting Started
+---------------
+1. Clone this repo:
+::
+
+    $ git clone git@github.com:pjhoberman/ginger-arxiv.git pj-ginger-test && cd pj-ginger-test
+
+2. Set up and start a virtual environment
+::
+
+    $ python3 -m venv .
+    $ source bin/activate
+
+3. Install requirements
+
+::
+
+    $ pip install -r requirements/local.txt
+
+- There are a lot due to cookiecutter so this might take a minute.
+
+4. You can run the server now
+::
+
+    $ python manage.py runserver
+
+5. Start redis
+::
+
+    $ redis-server
+
+6. Start celery
+::
+
+    $ celery -A config.celery_app worker --loglevel=info
+
+7. To start downloading articles, navigate to http://127.0.0.1:8000/import_articles.
+
+
+Notes:
+- Not set up for production yet
+- Used cookiecutter but didn't use most of the features yet
+- No daemons, all manual for now
+
 Basic Commands
 --------------
 
@@ -82,7 +126,6 @@ To run a celery worker:
     celery -A config.celery_app worker -l info
 
 Please note: For Celery's import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
-
 
 
 
