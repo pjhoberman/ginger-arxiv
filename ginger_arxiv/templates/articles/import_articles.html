@@ -5,11 +5,11 @@
 {% block content %}
 <div class="container">
   <h1>Import Articles</h1>
-  {% if article_count %}
-  Imported {{ article_count }} articles.
+  {% if message %}
+    Importing {{ message }} articles. Head to the home page and refresh wildly to see the results.
   {% else %}
   This operation runs automatically. Calling it now might take some time. Are you sure?<br />
-  Also, there isn't any ajax set up yet, so this page might just look like it's loading for a while.<br />
+  Also, there isn't any ajax set up yet, so you'll have to check the celery logs to see when it's done loading.<br />
   <button class="btn-primary" onclick="window.location = window.location + '?call=true';">Run it!</button>
   {% endif %}
 </div>

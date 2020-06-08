@@ -344,3 +344,4 @@ ginger_arxiv/media/
 .envs/*
 !.envs/.local/
 .idea/*
+dump.rdb

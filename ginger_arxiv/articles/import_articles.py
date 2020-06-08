@@ -3,6 +3,7 @@ from datetime import date, datetime, timedelta
 
 import feedparser
 
+from config.celery_app import app
 from ginger_arxiv.articles.models import Article, Author
 
 """
@@ -33,6 +34,7 @@ def convert_date(d: str):
     return date(d.year, d.month, d.day) if d else None
 
 
+@app.task
 def call_arxiv_api(test: bool = False):
     base_url = f"http://export.arxiv.org/api/query?search_query={Q}&sortBy=submittedDate&sortOrder=descending"
     start = 0

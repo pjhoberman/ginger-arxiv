@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+# from datetime import date, timedelta
 
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
@@ -34,16 +34,18 @@ def author_detail(request, author_pk):
 
 
 def import_articles(request):
-    article_count = None
+    # article_count = None
+    message = None
     if request.GET.get("test", None):
-        call_arxiv_api(test=True)
+        call_arxiv_api.delay(test=True)
+        message = "test"
 
     elif request.GET.get("call", None):
-        call_arxiv_api(test=True)  # todo: remove test
-        article_count = Article.objects.filter(
-            added__gt=date.today() - timedelta(days=1)
-        ).count()
+        call_arxiv_api.delay(test=True)  # todo: remove test
+        # article_count = Article.objects.filter(
+        #     added__gt=date.today() - timedelta(days=1)
+        # ).count()
+        message = "real"
+        # todo: send some sort of message when collection is done
 
-    return render(
-        request, "articles/import_articles.html", {"article_count": article_count}
-    )
+    return render(request, "articles/import_articles.html", {"message": message})
