@@ -7,7 +7,7 @@
   <h1>Authors</h1>
   <ul>
     {%  for author in authors %}
-      <li><a href="{% url 'articles:author_detail' author_pk=author.pk %}">{{ author }}</a> ({{ author.count_articles }})</li>
+      <li><a href="{% url 'articles:author_detail' author_pk=author.pk %}">{{ author }}</a> ({{ author.article_count }})</li>
     {% endfor %}
   </ul>
 

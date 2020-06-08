@@ -8,7 +8,7 @@ from .models import Article, Author
 
 
 def list_articles(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by("-arxiv_published", "-added")
     paginator = Paginator(articles, 20)
     page_number = request.GET.get("page")
     page_articles = paginator.get_page(page_number)
