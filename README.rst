@@ -54,6 +54,10 @@ Getting Started
 
 6. Start redis
 
+- Install redis first if you don't have it.
+- You can check if ``$ which redis`` returns a path or nothing.
+- Assuming you have homebrew, install redis with ``$ brew update && brew install redis``.
+
 ::
 
     $ redis-server
