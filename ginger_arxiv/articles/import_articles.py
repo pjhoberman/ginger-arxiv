@@ -38,7 +38,7 @@ def convert_date(d: str):
 def call_arxiv_api(test: bool = False):
     base_url = f"http://export.arxiv.org/api/query?search_query={Q}&sortBy=submittedDate&sortOrder=descending"
     start = 0
-    max_results = 1000
+    max_results = 250
     url = f"{base_url}&start={start}&max_results={max_results}"
 
     six_months_ago = date.today() - timedelta(weeks=26)
@@ -101,5 +101,5 @@ def get_articles(entries):
             )
             author.articles.add(article)
             author.article_count = author.articles.count()
-            author.save()  # todo: time consuming but saves time later
+            author.save()  # Todo: This should move to the model, and article.delete() should also update this.
     return True

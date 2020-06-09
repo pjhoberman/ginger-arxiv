@@ -24,11 +24,13 @@ Moved to settings_.
 Getting Started
 ---------------
 1. Clone this repo:
+
 ::
 
     $ git clone git@github.com:pjhoberman/ginger-arxiv.git pj-ginger-test && cd pj-ginger-test
 
 2. Set up and start a virtual environment
+
 ::
 
     $ python3 -m venv .
@@ -42,26 +44,35 @@ Getting Started
 
 - There are a lot due to cookiecutter so this might take a minute.
 
-4. You can run the server now
+4. Create a postgres database named `ginger_arxiv`
+
+5. You can run the server now
+
 ::
 
     $ python manage.py runserver
 
-5. Start redis
+6. Start redis
+
 ::
 
     $ redis-server
 
-6. Start celery
+7. Start celery
+
 ::
 
     $ celery -A config.celery_app worker --loglevel=info
 
-7. To start downloading articles, navigate to http://127.0.0.1:8000/import_articles.
+8. To start downloading articles, navigate to http://127.0.0.1:8000/import_articles.
+
+- Note: running a test will go quickly, but will make the full import quit early due to the way the the full import checks for existing entries.
+- To run a test and then run the full import, delete all authors and articles.
 
 
 Notes:
-- Not set up for production yet
+
+- Not set up for production
 - Used cookiecutter but didn't use most of the features yet
 - No daemons, all manual for now
 
