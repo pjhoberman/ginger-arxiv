@@ -46,13 +46,23 @@ Getting Started
 
 4. Create a postgres database named `ginger_arxiv`
 
+::
+
+    # CREATE DATABASE ginger_arxiv;
+
+5. Run migrations:
+
+::
+
+    $ python manage.py migrate
+
 5. You can run the server now
 
 ::
 
     $ python manage.py runserver
 
-6. Start redis
+6. Start redis in a new terminal window or tab (make sure your venv is running)
 
 - Install redis first if you don't have it.
 - You can check if ``$ which redis`` returns a path or nothing.
@@ -62,16 +72,21 @@ Getting Started
 
     $ redis-server
 
-7. Start celery
+7. Start celery in a new terminal window or tab (make sure your venv is running)
 
 ::
 
     $ celery -A config.celery_app worker --loglevel=info
 
+- This is also where you can see log outputs from the import article script.
+
 8. To start downloading articles, navigate to http://127.0.0.1:8000/import_articles.
 
-- Note: running a test will go quickly, but will make the full import quit early due to the way the the full import checks for existing entries.
+- Note: running a test will go quickly, but will make the full import quit early
+  due to the way the the full import checks for existing entries.
 - To run a test and then run the full import, delete all authors and articles.
+
+9. And/or go to the home page: http://127.0.0.1:8000
 
 
 Notes:
